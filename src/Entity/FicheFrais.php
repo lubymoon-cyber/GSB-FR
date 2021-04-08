@@ -49,6 +49,11 @@ class FicheFrais
      */
     private $dateModificationFicheFrais;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $montantValide;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +127,18 @@ class FicheFrais
     public function setDateModificationFicheFrais(\DateTimeInterface $dateModificationFicheFrais): self
     {
         $this->dateModificationFicheFrais = $dateModificationFicheFrais;
+
+        return $this;
+    }
+
+    public function getMontantValide(): ?int
+    {
+        return $this->montantValide;
+    }
+
+    public function setMontantValide(int $montantValide): self
+    {
+        $this->montantValide = $montantValide;
 
         return $this;
     }
