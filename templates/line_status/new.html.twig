@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LineStatus{% endblock %}
+
+{% block body %}
+    <h1>Créer un état de facture.</h1>
+
+    {{ include('line_status/_form.html.twig') }}
+
+    <a href="{{ path('line_status_index') }}">retour</a>
+{% endblock %}
