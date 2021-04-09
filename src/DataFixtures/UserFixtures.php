@@ -24,14 +24,14 @@ class UserFixtures extends Fixture
 		
 		$superAdmin->setRoles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN', 'ROLE_COMPTABLE', 'ROLE_COMMERCIALE', 'ROLE_USER']);
 		$superAdmin->setEmail('superAdmin@superAdmin.fr');
-		$superAdmin->setLastName('superAdmin');
-		$superAdmin->setFirstName('superAdmin');
-		$superAdmin->setAddress('404ruedessuperAdmin');
-		$superAdmin->setCity('superAdmin');
-		$superAdmin->setPostalCode('42720');
-		$superAdmin->setHireDate(new DateTime());
-		$superAdmin->setRegistrationNumber('0123456789');
-		$superAdmin->setPhone('0123456789');
+		$superAdmin->setNom('superAdmin');
+		$superAdmin->setPrenom('superAdmin');
+		$superAdmin->setAdresse('404ruedessuperAdmin');
+		$superAdmin->setVille('superAdmin');
+		$superAdmin->setCodePostal('42720');
+		$superAdmin->setDateEmbauche(new DateTime());
+		$superAdmin->setMatricule('0123456789');
+		$superAdmin->setTelephone('0123456789');
 		$superAdmin->setPassword($this->passwordEncoder->encodePassword(
 			$superAdmin,
 			'superAdmin'
@@ -41,14 +41,14 @@ class UserFixtures extends Fixture
 		
 		$admin->setRoles(['ROLE_ADMIN', 'ROLE_COMPTABLE', 'ROLE_COMMERCIALE', 'ROLE_USER']);
 		$admin->setEmail('admin@admin.fr');
-		$admin->setLastName('admin');
-		$admin->setFirstName('admin');
-		$admin->setAddress('404ruedesadmin');
-		$admin->setCity('admin');
-		$admin->setPostalCode('42720');
-		$admin->setHireDate(new DateTime());
-		$admin->setRegistrationNumber('0123456789');
-		$admin->setPhone('0123456789');
+		$admin->setNom('admin');
+		$admin->setPrenom('admin');
+		$admin->setAdresse('404ruedesadmin');
+		$admin->setVille('admin');
+		$admin->setCodePostal('42720');
+		$admin->setDateEmbauche(new DateTime());
+		$admin->setMatricule('0123456789');
+		$admin->setTelephone('0123456789');
 		$admin->setPassword($this->passwordEncoder->encodePassword(
 			$admin,
 			'admin'
@@ -58,14 +58,14 @@ class UserFixtures extends Fixture
 		
 		$comptable->setRoles(['ROLE_COMPTABLE']);
 		$comptable->setEmail('comptable@comptable.fr');
-		$comptable->setLastName('comptable');
-		$comptable->setFirstName('comptable');
-		$comptable->setAddress('404ruedescomptable');
-		$comptable->setCity('comptable');
-		$comptable->setPostalCode('42720');
-		$comptable->setHireDate(new DateTime());
-		$comptable->setRegistrationNumber('0123456789');
-		$comptable->setPhone('0123456789');
+		$comptable->setNom('comptable');
+		$comptable->setPrenom('comptable');
+		$comptable->setAdresse('404ruedescomptable');
+		$comptable->setVille('comptable');
+		$comptable->setCodePostal('42720');
+		$comptable->setDateEmbauche(new DateTime());
+		$comptable->setMatricule('0123456789');
+		$comptable->setTelephone('0123456789');
 		$comptable->setPassword($this->passwordEncoder->encodePassword(
 			$comptable,
 			'comptable'
@@ -75,14 +75,14 @@ class UserFixtures extends Fixture
 		
 		$commerciale->setRoles(['ROLE_COMMERCIALE']);
 		$commerciale->setEmail('commerciale@commerciale.fr');
-		$commerciale->setLastName('commerciale');
-		$commerciale->setFirstName('commerciale');
-		$commerciale->setAddress('404ruedescommerciale');
-		$commerciale->setCity('commerciale');
-		$commerciale->setPostalCode('42720');
-		$commerciale->setHireDate(new DateTime());
-		$commerciale->setRegistrationNumber('0123456789');
-		$commerciale->setPhone('0123456789');
+		$commerciale->setNom('commerciale');
+		$commerciale->setPrenom('commerciale');
+		$commerciale->setAdresse('404ruedescommerciale');
+		$commerciale->setVille('commerciale');
+		$commerciale->setCodePostal('42720');
+		$commerciale->setDateEmbauche(new DateTime());
+		$commerciale->setMatricule('0123456789');
+		$commerciale->setTelephone('0123456789');
 		$commerciale->setPassword($this->passwordEncoder->encodePassword(
 			$commerciale,
 			'commerciale'
@@ -91,14 +91,14 @@ class UserFixtures extends Fixture
 		$user = new User();
 		
 		$user->setEmail('user@user.fr');
-		$user->setLastName('user');
-		$user->setFirstName('user');
-		$user->setAddress('404ruedesuser');
-		$user->setCity('user');
-		$user->setPostalCode('42720');
-		$user->setHireDate(new DateTime());
-		$user->setRegistrationNumber('0123456789');
-		$user->setPhone('0123456789');
+		$user->setNom('user');
+		$user->setPrenom('user');
+		$user->setAdresse('404ruedesuser');
+		$user->setVille('user');
+		$user->setCodePostal('42720');
+		$user->setDateEmbauche(new DateTime());
+		$user->setMatricule('0123456789');
+		$user->setTelephone('0123456789');
 		$user->setPassword($this->passwordEncoder->encodePassword(
 			$user,
 			'user'
