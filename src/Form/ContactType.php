@@ -18,12 +18,12 @@ class ContactType extends AbstractType
         $builder
             ->add('email')
             ->add('password')
-            ->add('lastName')
-            ->add('firstName')
-            ->add('address')
-            ->add('city')
-            ->add('postalCode')
-            ->add('hireDate', DateType::class, [
+            ->add('nom')
+            ->add('prenom')
+            ->add('adresse')
+            ->add('villr')
+            ->add('codePostal')
+            ->add('dateEmbauche', DateType::class, [
                 'widget' => 'single_text',
                 // this is actually the default format for single_text
                 'format' => 'dd-MM-yyyy',
@@ -32,8 +32,8 @@ class ContactType extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'js-datepicker'],
             ])
-            ->add('registrationNumber')
-            ->add('phone')
+            ->add('matricule')
+            ->add('telephone')
             ->add('password',
                 RepeatedType::class,
                 array(

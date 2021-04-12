@@ -12,14 +12,14 @@ class MessagingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('state')
+            ->add('etat')
             ->add('archives')
-            ->add('object')
+            ->add('objet')
             ->add('message')
-            ->add('messageDate')
-            ->add('mailUser')
-            ->add('destinationUser')
-            ->add('senderUser')
+            ->add('dateMesage')
+            ->add('userMail')
+            ->add('userDestination')
+            ->add('userEnvoyeur')
         ;
     }
 

@@ -31,7 +31,7 @@
 			                <input type="checkbox" name="_remember_me"> Remember me
 			            </label>
 			        </div>
-	#}
+			    #}
 
 	{# <button class="btn btn-lg btn-primary" type="submit">
 			        Sign in
@@ -127,8 +127,7 @@
 			       
 			</form> #}
 
-	<div class="container mx-auto text-center">
-		{% if app.user %}
+		<form method="post"> {% if app.user %}
 			<div class="mb-3">
 				You are logged in as
 				{{ app.user.username }},
@@ -136,30 +135,40 @@
 			</div>
 		{% endif %}
 
-		<br/>
-
+		<center>
+			<br></br>
 		<div class="card border-primary" style="max-width: 50rem; box-shadow: 0 4px 8px">
 			<h1 class="card-header text-center">Connexion</h1>
 			<div class="card-body text-primary">
 				<img src="https://sites.google.com/site/portfolioclementparent/_/rsrc/1394810844515/mon-carnet-de-bord/travaux-et-projets/projet-gsb/logo.png">
 				<br>
-				</br>
-				<form class="user" method="post">
-					<div class="form-group m-2">
-						<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" required autofocus placeholder="Saisissez votre Email...">
-					</div>
+			</br>
+			<form class="user">
+				<div class="form-group m-2">
+					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" required autofocus placeholder="Saisissez votre Email...">
 					<div class="form-group m-2">
 						<input type="password" name="password" id="inputPassword" class="form-control form-control-user" placeholder="Mot de passe..." required>
 						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 						<button type="submit" name="login" class="btn btn-primary m-2">Se connecter</button>
 						<div class="">
-							<a href="{{path ('contact_new') }}" class="btn btn-outline-primary" type="submit">Créer un compte</a>
+						<a href="{{path ('contact_new') }}" class="btn btn-outline-primary" type="submit">Créer un compte</a>
+					
 						</div>
 					</div>
+				</div>
 
-				</form>
 			</div>
-		</div>
-	</div>
+		</center>
 
-{% endblock %}
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin-2.min.js"></script>
+
+
+	{% endblock %}
