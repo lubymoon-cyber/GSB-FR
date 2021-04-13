@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LigneStatus{% endblock %}
+
+{% block body %}
+    <h1>LigneStatus</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ligne_status.id }}</td>
+            </tr>
+            <tr>
+                <th>Wording</th>
+                <td>{{ ligne_status.wording }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ligne_status_index') }}">back to list</a>
+
+    <a href="{{ path('ligne_status_edit', {'id': ligne_status.id}) }}">edit</a>
+
+    {{ include('ligne_status/_delete_form.html.twig') }}
+{% endblock %}

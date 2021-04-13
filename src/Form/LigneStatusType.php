@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\LineStatus;
+use App\Entity\LigneStatus;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LineStatusType extends AbstractType
+class LigneStatusType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,7 +19,7 @@ class LineStatusType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => LineStatus::class,
+            'data_class' => LigneStatus::class,
         ]);
     }
 }
