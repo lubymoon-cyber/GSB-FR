@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\StatutLigne;
-use App\Form\LigneStatusType;
+use App\Form\LigneStatutType;
 use App\Repository\StatutLigneRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,28 +11,28 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/ligne/status")
+ * @Route("/ligne/statut")
  */
-class LigneStatusController extends AbstractController
+class LigneStatutController extends AbstractController
 {
     /**
-     * @Route("/", name="ligne_status_index", methods={"GET"})
+     * @Route("/", name="ligne_statut_index", methods={"GET"})
      */
     public function index(StatutLigneRepository $statutLigneRepository): Response
     {
-        return $this->render('ligne_status/index.html.twig', [
-            'ligne_statuses' => $statutLigneRepository->findAll(),
+        return $this->render('ligne_statut/index.html.twig', [
+            'ligne_statutes' => $statutLigneRepository->findAll(),
             'mon_nom' => "de.sam"
         ]);
     }
 
     /**
-     * @Route("/new", name="ligne_status_new", methods={"GET","POST"})
+     * @Route("/new", name="ligne_statut_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
         $ligneStatut = new StatutLigne();
-        $form = $this->createForm(LigneStatusType::class, $ligneStatut);
+        $form = $this->createForm(LigneStatutType::class, $ligneStatut);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,47 +40,48 @@ class LigneStatusController extends AbstractController
             $entityManager->persist($ligneStatut);
             $entityManager->flush();
 
-            return $this->redirectToRoute('ligne_status_index');
+            return $this->redirectToRoute('ligne_statut_index');
         }
 
-        return $this->render('ligne_status/new.html.twig', [
-            'ligne_status' => $ligneStatut,
+        return $this->render('ligne_statut/new.html.twig', [
+            'ligne_statut' => $ligneStatut,
             'form' => $form->createView(),
+            
         ]);
     }
 
     /**
-     * @Route("/{id}", name="ligne_status_show", methods={"GET"})
+     * @Route("/{id}", name="ligne_statut_show", methods={"GET"})
      */
     public function show(StatutLigne $statutLigne): Response
     {
-        return $this->render('ligne_status/show.html.twig', [
-            'ligne_status' => $statutLigne,
+        return $this->render('ligne_statut/show.html.twig', [
+            'ligne_statut' => $statutLigne,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="ligne_status_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="ligne_statut_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, StatutLigne $statutLigne): Response
     {
-        $form = $this->createForm(LigneStatusType::class, $statutLigne);
+        $form = $this->createForm(LigneStatutType::class, $statutLigne);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('ligne_status_index');
+            return $this->redirectToRoute('ligne_statut_index');
         }
 
-        return $this->render('ligne_status/edit.html.twig', [
-            'ligne_status' => $statutLigne,
+        return $this->render('ligne_statut/edit.html.twig', [
+            'ligne_statut' => $statutLigne,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="ligne_status_delete", methods={"POST"})
+     * @Route("/{id}", name="ligne_statut_delete", methods={"POST"})
      */
     public function delete(Request $request, StatutLigne $statutLigne): Response
     {
@@ -90,6 +91,6 @@ class LigneStatusController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('ligne_status_index');
+        return $this->redirectToRoute('ligne_statut_index');
     }
 }

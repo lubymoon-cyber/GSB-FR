@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Messaging;
+use App\Entity\Message;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MessagingType extends AbstractType
+class MessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -16,7 +16,7 @@ class MessagingType extends AbstractType
             ->add('archives')
             ->add('objet')
             ->add('message')
-            ->add('dateMesage')
+            ->add('messageDate')
             ->add('userMail')
             ->add('userDestination')
             ->add('userEnvoyeur')
@@ -26,7 +26,7 @@ class MessagingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Messaging::class,
+            'data_class' => Message::class,
         ]);
     }
 }
