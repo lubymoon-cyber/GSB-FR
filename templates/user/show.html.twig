@@ -24,43 +24,43 @@
                 <td>{{ user.password }}</td>
             </tr>
             <tr>
-                <th>LastName</th>
-                <td>{{ user.lastName }}</td>
+                <th>Nom</th>
+                <td>{{ user.nom }}</td>
             </tr>
             <tr>
-                <th>FirstName</th>
-                <td>{{ user.firstName }}</td>
+                <th>Prenom</th>
+                <td>{{ user.prenom }}</td>
             </tr>
             <tr>
-                <th>Address</th>
-                <td>{{ user.address }}</td>
+                <th>Adresse</th>
+                <td>{{ user.adresse }}</td>
             </tr>
             <tr>
-                <th>City</th>
-                <td>{{ user.city }}</td>
+                <th>Ville</th>
+                <td>{{ user.ville }}</td>
             </tr>
             <tr>
-                <th>PostalCode</th>
-                <td>{{ user.postalCode }}</td>
+                <th>CodePostal</th>
+                <td>{{ user.codePostal }}</td>
             </tr>
             <tr>
-                <th>HireDate</th>
-                <td>{{ user.hireDate ? user.hireDate|date('Y-m-d H:i:s') : '' }}</td>
+                <th>DateEmbauche</th>
+                <td>{{ user.dateEmbauche ? user.dateEmbauche|date('d-m-Y H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>RegistrationNumber</th>
-                <td>{{ user.registrationNumber }}</td>
+                <th>Matricule</th>
+                <td>{{ user.matricule }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
-                <td>{{ user.phone }}</td>
+                <th>Telephone</th>
+                <td>{{ user.telephone }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('user_index') }}">back to list</a>
+    <a href="{{ path('user_index') }}">retour</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+    <a href="{{ path('user_edit', {'id': user.id}) }}">modification</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

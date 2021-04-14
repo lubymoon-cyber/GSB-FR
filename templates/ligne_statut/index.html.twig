@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des état des factures{% endblock %}
+
+{% block body %}
+    <h1>Liste des état des factures{{mon_nom}}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ligne_statut in ligne_statutes %}
+            <tr>
+                <td>{{ ligne_statut.id }}</td>
+                <td>{{ ligne_statut.libelle }}</td>
+                <td>
+                    <a href="{{ path('ligne_statut_show', {'id': ligne_statut.id}) }}">Voir</a>
+                    <a href="{{ path('ligne_statut_edit', {'id': ligne_statut.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ligne_statut_new') }}">Créer un nouveau statut</a>
+{% endblock %}

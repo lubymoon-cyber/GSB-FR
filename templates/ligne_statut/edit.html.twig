@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification lignestatut{% endblock %}
+
+{% block body %}
+    <h1>Modification lignestatut</h1>
+
+    {{ include('ligne_statut/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('ligne_statut_index') }}">Retour</a>
+
+    {{ include('ligne_statut/_delete_form.html.twig') }}
+{% endblock %}
