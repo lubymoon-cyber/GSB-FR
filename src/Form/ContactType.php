@@ -21,7 +21,7 @@ class ContactType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('adresse')
-            ->add('villr')
+            ->add('ville')
             ->add('codePostal')
             ->add('dateEmbauche', DateType::class, [
                 'widget' => 'single_text',
