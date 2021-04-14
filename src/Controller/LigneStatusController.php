@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\LigneStatus;
+use App\Entity\StatutLigne;
 use App\Form\LigneStatusType;
-use App\Repository\LigneStatusRepository;
+use App\Repository\StatutLigneRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +18,10 @@ class LigneStatusController extends AbstractController
     /**
      * @Route("/", name="ligne_status_index", methods={"GET"})
      */
-    public function index(LigneStatusRepository $ligneStatusRepository): Response
+    public function index(StatutLigneRepository $statutLigneRepository): Response
     {
         return $this->render('ligne_status/index.html.twig', [
-            'ligne_statuses' => $ligneStatusRepository->findAll(),
+            'ligne_statuses' => $statutLigneRepository->findAll(),
             'mon_nom' => "de.sam"
         ]);
     }
@@ -31,20 +31,20 @@ class LigneStatusController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $ligneStatus = new LigneStatus();
-        $form = $this->createForm(LigneStatusType::class, $ligneStatus);
+        $ligneStatut = new StatutLigne();
+        $form = $this->createForm(LigneStatusType::class, $ligneStatut);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($ligneStatus);
+            $entityManager->persist($ligneStatut);
             $entityManager->flush();
 
             return $this->redirectToRoute('ligne_status_index');
         }
 
         return $this->render('ligne_status/new.html.twig', [
-            'ligne_status' => $ligneStatus,
+            'ligne_status' => $ligneStatut,
             'form' => $form->createView(),
         ]);
     }
@@ -52,19 +52,19 @@ class LigneStatusController extends AbstractController
     /**
      * @Route("/{id}", name="ligne_status_show", methods={"GET"})
      */
-    public function show(LigneStatus $ligneStatus): Response
+    public function show(StatutLigne $statutLigne): Response
     {
         return $this->render('ligne_status/show.html.twig', [
-            'ligne_status' => $ligneStatus,
+            'ligne_status' => $statutLigne,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="ligne_status_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, LigneStatus $ligneStatus): Response
+    public function edit(Request $request, StatutLigne $statutLigne): Response
     {
-        $form = $this->createForm(LigneStatusType::class, $ligneStatus);
+        $form = $this->createForm(LigneStatusType::class, $statutLigne);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -74,7 +74,7 @@ class LigneStatusController extends AbstractController
         }
 
         return $this->render('ligne_status/edit.html.twig', [
-            'ligne_status' => $ligneStatus,
+            'ligne_status' => $statutLigne,
             'form' => $form->createView(),
         ]);
     }
@@ -82,11 +82,11 @@ class LigneStatusController extends AbstractController
     /**
      * @Route("/{id}", name="ligne_status_delete", methods={"POST"})
      */
-    public function delete(Request $request, LigneStatus $ligneStatus): Response
+    public function delete(Request $request, StatutLigne $statutLigne): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$ligneStatus->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$statutLigne->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($ligneStatus);
+            $entityManager->remove($statutLigne);
             $entityManager->flush();
         }
 

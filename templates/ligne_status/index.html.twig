@@ -17,10 +17,10 @@
         {% for ligne_status in ligne_statuses %}
             <tr>
                 <td>{{ ligne_status.id }}</td>
-                <td>{{ ligne_status.wording }}</td>
+                <td>{{ ligne_status.libelle }}</td>
                 <td>
-                    <a href="{{ path('line_status_show', {'id': ligne_status.id}) }}">Voir</a>
-                    <a href="{{ path('line_status_edit', {'id': ligne_status.id}) }}">Modifier</a>
+                    <a href="{{ path('ligne_status_show', {'id': ligne_status.id}) }}">Voir</a>
+                    <a href="{{ path('ligne_status_edit', {'id': ligne_status.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
