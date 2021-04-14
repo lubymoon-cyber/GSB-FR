@@ -89,17 +89,17 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $messaging = new Messaging();
-            $messaging->setDestinationUser($em->getRepository(User::class)->find(1));
-            $messaging->setSenderUser($user);
-            $messaging->setState(0);
-            $messaging->setArchives(0);
-            $messaging->setObject("Demande d'un accès au site.");
-            $messaging->setMessage("Demande pour " . $user->getLastName()." " . $user->getFirstName());
-            $messaging->setMessageDate(new DateTime());
-            $messaging->setMailUser($em->getRepository(User::class)->find(1));
+            $message = new Message();
+            $message->setDestinationUser($em->getRepository(User::class)->find(1));
+            $message->setSenderUser($user);
+            $message->setState(0);
+            $message->setArchives(0);
+            $message->setObject("Demande d'un accès au site.");
+            $message->setMessage("Demande pour " . $user->getLastName()." " . $user->getFirstName());
+            $message->setMessageDate(new DateTime());
+            $message->setMailUser($em->getRepository(User::class)->find(1));
 
-            $entityManager->persist($messaging);
+            $entityManager->persist($message);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_login');

@@ -19,12 +19,12 @@ class UserType extends AbstractType
             ->add('email')
             ->add('roles')
             ->add('password')
-            ->add('lastName')
-            ->add('firstName')
-            ->add('address')
-            ->add('city')
-            ->add('postalCode')
-            ->add('hireDate', DateType::class, [
+            ->add('nom')
+            ->add('prenom')
+            ->add('adresse')
+            ->add('ville')
+            ->add('codePostal')
+            ->add('dateEmbauche', DateType::class, [
                 'widget' => 'single_text',
                 // this is actually the default format for single_text
                 'format' => 'dd-MM-yyyy',
@@ -33,8 +33,8 @@ class UserType extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'js-datepicker'],
             ])
-            ->add('registrationNumber')
-            ->add('phone')
+            ->add('matricule')
+            ->add('telephone')
             ->add(
                 'roles',
                 ChoiceType::class, [
