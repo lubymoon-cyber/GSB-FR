@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\ContactType;
+use App\Entity\Messagerie;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -89,17 +91,16 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $message = new Message();
-            $message->setDestinationUser($em->getRepository(User::class)->find(1));
-            $message->setSenderUser($user);
-            $message->setState(0);
-            $message->setArchives(0);
-            $message->setObject("Demande d'un accès au site.");
-            $message->setMessage("Demande pour " . $user->getLastName()." " . $user->getFirstName());
-            $message->setMessageDate(new DateTime());
-            $message->setMailUser($em->getRepository(User::class)->find(1));
-
-            $entityManager->persist($message);
+            $messagerie = new Messagerie();
+            $messagerie->setUtilisateurDestinataireMessagerie($em->getRepository(User::class)->find(1));
+            $messagerie->setUtilisateurExpediteurMessagerie($user);
+            $messagerie->setEtat(0);
+            $messagerie->setArchive(0);
+            $messagerie->setObjet("Demande d'un accès au site.");
+            $messagerie->setMessage("Demande pour " . $user->getNom()." " . $user->getPrenom());
+            $messagerie->setDateMessageMessagerie(new DateTime('d-m-Y H:00:00'));
+            $messagerie->setUtilisateurMessagerie($em->getRepository(User::class)->find(1));
+            $entityManager->persist($messagerie);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_login');

@@ -49,10 +49,10 @@ class FicheFrais
      */
     private $dateModificationFicheFrais;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $montantValide;
+    // /**
+    //  * @ORM\Column(type="integer")
+    //  */
+    // private $montantValide;
 
     public function getId(): ?int
     {
@@ -131,15 +131,15 @@ class FicheFrais
         return $this;
     }
 
-    public function getMontantValide(): ?int
-    {
-        return $this->montantValide;
-    }
+    // public function getMontantValide(): ?int
+    // {
+    //     return $this->montantValide;
+    // }
 
-    public function setMontantValide(int $montantValide): self
-    {
-        $this->montantValide = $montantValide;
+    // public function setMontantValide(int $montantValide): self
+    // {
+    //     $this->montantValide = $montantValide;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
