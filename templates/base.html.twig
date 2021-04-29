@@ -14,6 +14,12 @@
 
         <!-- Custom styles for this template-->
         <link href="{{ asset('sbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+        <!-- Debut DataTables -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/w/bs4/dt-1.10.21/datatables.min.css"/>
+        <link href="https://datatables.net/download/build/dataTables.responsive.nightly.css" rel="stylesheet" type="text/css" />
+        <!-- fin DataTables -->  
+
     {% endblock %}
 
     {% block javascripts %}
@@ -34,6 +40,18 @@
         <!-- Page level custom scripts -->
         <script src="{{ asset('sbadmin2/js/demo/chart-area-demo.js') }}"></script>
         <script src="{{ asset('sbadmin2/js/demo/chart-pie-demo.js') }}"></script>
+
+        
+<!--Debut DataTables  -->
+    <script type="text/javascript" src="https://cdn.datatables.net/w/bs4/dt-1.10.21/datatables.min.js%22%3E</script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-eu.js%22%3E</script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-euro.js%22%3E</script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js%22%3E</script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js%22%3E</script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js%22%3E</script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js%22%3E</script>
+    <script src="https://datatables.net/download/build/dataTables.responsive.nightly.js%22%3E</script>
+    <!--Fin DataTables  -->
 
     {% endblock %}
 </head>
@@ -93,16 +111,16 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                    aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>MET TA MESSAGERIE ICI SI TU VEUX :)</span>
+                    <span>Messagerie</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <h6 class="collapse-header">Messagerie:</h6>
+                        <a class="collapse-item" href="{{ path('message_index') }}">Liste des messages</a>
+                        <a class="collapse-item" href="{{ path('message_new') }}">Ecrire un message</a>
                         <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+
                     </div>
                 </div>
             </li>

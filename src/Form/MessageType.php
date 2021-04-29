@@ -2,9 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Message;
+
+use App\Entity\User;
+use App\Entity\Messagerie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MessageType extends AbstractType
@@ -13,20 +16,35 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('etat')
-            ->add('archives')
-            ->add('objet')
+            ->add('archive')
+            ->add('objet', NULL, [
+                'attr'=> [
+                    'class'=>'text-primary'
+                ],
+                'label'=>'objet du message'
+            ])
             ->add('message')
-            ->add('messageDate')
-            ->add('userMail')
-            ->add('userDestination')
-            ->add('userEnvoyeur')
+            ->add('dateMessageMessagerie')
+            // ->add('utilisateurMessagerie',EntityType::class,[
+            //     "class" => User::class,
+            //     "choice_label" => "nom"
+            // ])
+
+            ->add('utilisateurDestinataireMessagerie',EntityType::class,[
+                "class" => User::class,
+                "choice_label" => "nom"
+            ])
+            // ->add('utilisateurExpediteurMessagerie',EntityType::class,[
+            //     "class" => User::class,
+            //     "choice_label" => "nom"
+            // ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Message::class,
+            'data_class' => Messagerie::class,
         ]);
     }
 }
