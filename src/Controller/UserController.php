@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\ContactType;
@@ -11,7 +12,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -98,7 +98,7 @@ class UserController extends AbstractController
             $messagerie->setArchive(0);
             $messagerie->setObjet("Demande d'un accès au site.");
             $messagerie->setMessage("Demande pour " . $user->getNom()." " . $user->getPrenom());
-            $messagerie->setDateMessageMessagerie(new DateTime('d-m-Y H:00:00'));
+            $messagerie->setDateMessageMessagerie(new DateTime('NOW'));
             $messagerie->setUtilisateurMessagerie($em->getRepository(User::class)->find(1));
             $entityManager->persist($messagerie);
             $entityManager->flush();
