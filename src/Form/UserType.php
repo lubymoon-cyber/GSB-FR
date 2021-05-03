@@ -42,7 +42,7 @@ class UserType extends AbstractType
                         'ROLE_SUPER_ADMIN' => 'SUPER_ROLE_ADMIN',
                         'ROLE_ADMIN' => 'ROLE_ADMIN',
                         'ROLE_COMPTABLE' => 'ROLE_COMPTABLE',
-                        'ROLE_COMMERCIALE' => 'ROLE_COMMERCIALE',
+                        'ROLE_COMMERCIAL' => 'ROLE_COMMERCIAL',
                         'ROLE_USER' => 'ROLE_USER'
                     ],
                     'expanded' => true,
