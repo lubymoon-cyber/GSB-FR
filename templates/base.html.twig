@@ -18,7 +18,7 @@
         <!-- Debut DataTables -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/w/bs4/dt-1.10.21/datatables.min.css"/>
         <link href="https://datatables.net/download/build/dataTables.responsive.nightly.css" rel="stylesheet" type="text/css" />
-        <!-- fin DataTables -->  
+        <!-- fin DataTables -->
 
     {% endblock %}
 
@@ -41,17 +41,17 @@
         <script src="{{ asset('sbadmin2/js/demo/chart-area-demo.js') }}"></script>
         <script src="{{ asset('sbadmin2/js/demo/chart-pie-demo.js') }}"></script>
 
-        
-<!--Debut DataTables  -->
-    <script type="text/javascript" src="https://cdn.datatables.net/w/bs4/dt-1.10.21/datatables.min.js%22%3E</script>
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-eu.js%22%3E</script>
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-euro.js%22%3E</script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js%22%3E</script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js%22%3E</script>
-    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js%22%3E</script>
-    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js%22%3E</script>
-    <script src="https://datatables.net/download/build/dataTables.responsive.nightly.js%22%3E</script>
-    <!--Fin DataTables  -->
+
+        <!--Debut DataTables  -->
+        <script type="text/javascript" src="https://cdn.datatables.net/w/bs4/dt-1.10.21/datatables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-eu.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-euro.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+        <script src="https://datatables.net/download/build/dataTables.responsive.nightly.js"></script>
+        <!--Fin DataTables  -->
 
     {% endblock %}
 </head>
@@ -364,7 +364,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ app.user.prenom }} {{ app.user.nom }}</span>
                                 <img class="img-profile rounded-circle"
                                      src="img/undraw_profile.svg">
                             </a>

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use DateTime;
+use DateTimeZone;
 use App\Form\MessageType;
 use App\Entity\Messagerie;
 use App\Repository\UserRepository;
@@ -11,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 /**
  * @Route("/message")
@@ -32,6 +35,7 @@ class MessageController extends AbstractController
      */
     public function new(Request $request,UserRepository $userRepo): Response
     {
+        $dateNow = new DateTime(null, new DateTimeZone('Europe/Paris'));
         $message = new Messagerie();
         
         $form = $this->createForm(MessageType::class, $message);
@@ -43,6 +47,9 @@ class MessageController extends AbstractController
 
             $message->setUtilisateurMessagerie($message->getUtilisateurDestinataireMessagerie());
             $message->setUtilisateurExpediteurMessagerie($this->getUser());
+            $message->setDateMessageMessagerie($dateNow);
+            $message->setArchive(false);
+            $message->setEtat(false);
             $entityManager->persist($message);
             $entityManager->flush();
 

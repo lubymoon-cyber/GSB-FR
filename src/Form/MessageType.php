@@ -15,8 +15,6 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('etat')
-            ->add('archive')
             ->add('objet', NULL, [
                 'attr'=> [
                     'class'=>'text-primary'
@@ -24,7 +22,6 @@ class MessageType extends AbstractType
                 'label'=>'objet du message'
             ])
             ->add('message')
-            ->add('dateMessageMessagerie')
             // ->add('utilisateurMessagerie',EntityType::class,[
             //     "class" => User::class,
             //     "choice_label" => "nom"

@@ -8,37 +8,34 @@
     <table class="table table-hover table-sm table-light shadow-lg display" id="table">
         <thead class="thead-light">
             <tr>
-                <th>Id</th>
-                <th>State</th>
+                <th>Etat</th>
                 <th>Archives</th>
                 <th>De :</th>
                 <th>Pour :</th>
-                <th>Object</th>
+                <th>Objet</th>
                 <th>Message</th>
-                <th>MessageDate</th>
-                <th>actions</th>
+                <th>Date</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for message in messages %}
             <tr>
-                <td>{{ message.id }}</td>
+                
                 <td>{{ message.etat ? 'Yes' : 'No' }}</td>
                 <td>{{ message.archive ? 'Yes' : 'No' }}</td>
                 <td>{{ message.utilisateurExpediteurMessagerie.nom }}</td>
                 <td>{{ message.utilisateurDestinataireMessagerie.nom }} {{ message.utilisateurDestinataireMessagerie.prenom }}</td>
                 <td>{{ message.objet }}</td>
                 <td>{{ message.message }}</td>
-                <td>{{ message.dateMessageMessagerie ? message.dateMessageMessagerie|date('Y-m-d H:i:s') : '' }}</td>
+                <td><span hidden>{{ message.dateMessageMessagerie|date('Y-m-d H:i:s')}}</span> {{ message.dateMessageMessagerie ? message.dateMessageMessagerie|date('d-m-Y H:i') : '' }}</td>
                 <td>
                     <a href="{{ path('message_show', {'id': message.id}) }}">voir</a>
                     <a href="{{ path('message_edit', {'id': message.id}) }}">modification</a>
                 </td>
             </tr>
+
         {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
         {% endfor %}
         </tbody>
     </table>
@@ -52,7 +49,7 @@
         $(document).ready(function () {
             $('table.display').DataTable({
                 destroy: true,
-                "order": [[0, "desc"]],
+                "order": [6, "desc"],
                 "language": {
                     "lengthMenu": "Voir _MENU_ message par page",
                     "zeroRecords": "Aucun message trouvé",
