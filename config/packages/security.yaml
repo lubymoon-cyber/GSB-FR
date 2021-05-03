@@ -38,7 +38,7 @@ security:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/contact_new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: [ROLE_USER, ROLE_COMMERCIALE, ROLE_COMPTABLE, ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/, roles: [ROLE_USER, ROLE_COMMERCIAL, ROLE_COMPTABLE, ROLE_ADMIN, ROLE_SUPER_ADMIN] }
 
         # require ROLE_ADMIN for /admin*
         # - { path: ^/admin, roles: ROLE_ADMIN }
