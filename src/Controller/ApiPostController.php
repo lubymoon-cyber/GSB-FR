@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 use App\Repository\PostRepository;
+use App\Entity\User;
 use App\Repository\UserRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiPostController extends AbstractController
 {
@@ -24,7 +25,11 @@ class ApiPostController extends AbstractController
     public function apiGetUser(UserRepository $userRepository): JsonResponse
     {
         $users = $userRepository->findAll();
+        //dd($users);
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        return JsonResponse::fromJsonString($serializer->serialize($users, 'json'));
         
-        return JsonResponse::fromJsonString($this->serializer->serialize($users, 'json'));
+        //return JsonResponse::fromJsonString($this->serializer->serialize($users, 'json'));
     }
 }
