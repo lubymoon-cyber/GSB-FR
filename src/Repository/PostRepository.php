@@ -37,15 +37,17 @@ class PostRepository
                 comptablesetMatricule(0123456789),
                 comptablesetTelephone(0123456789),
 
-                commercialesetEmail(commerciale@commerciale.fr),
-                commercialesetNom(commerciale),
-                commercialesetPrenom(commerciale),
-                commercialesetAdresse(404ruedescommerciale),
-                commercialesetVille(commerciale),
-                commercialesetCodePostal(42720),
-                commercialesetDateEmbauche(new DateTime()),
-                commercialesetMatricule(0123456789),
-                commercialesetTelephone(0123456789),
+
+                commercialsetEmail(commercial@commercial.fr),
+                commercialsetNom(commercial),
+                commercialsetPrenom(commercial),
+                commercialsetAdresse(404ruedescommercial),
+                commercialsetVille(commercial),
+                commercialsetCodePostal(42720),
+                commercialsetDateEmbauche(new DateTime()),
+                commercialsetMatricule(0123456789),
+                commercialsetTelephone(0123456789),
+
 
                 usersetEmail(user@user.fr),
                 usersetNom(user),

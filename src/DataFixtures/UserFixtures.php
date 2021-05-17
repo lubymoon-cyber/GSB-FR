@@ -22,7 +22,7 @@ class UserFixtures extends Fixture
 
 		$superAdmin = new User();
 		
-		$superAdmin->setRoles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN', 'ROLE_COMPTABLE', 'ROLE_COMMERCIALE', 'ROLE_USER']);
+		$superAdmin->setRoles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN', 'ROLE_COMPTABLE', 'ROLE_COMMERCIAL', 'ROLE_USER']);
 		$superAdmin->setEmail('superAdmin@superAdmin.fr');
 		$superAdmin->setNom('superAdmin');
 		$superAdmin->setPrenom('superAdmin');
@@ -39,7 +39,7 @@ class UserFixtures extends Fixture
 
 		$admin = new User();
 		
-		$admin->setRoles(['ROLE_ADMIN', 'ROLE_COMPTABLE', 'ROLE_COMMERCIALE', 'ROLE_USER']);
+		$admin->setRoles(['ROLE_ADMIN', 'ROLE_COMPTABLE', 'ROLE_COMMERCIAL', 'ROLE_USER']);
 		$admin->setEmail('admin@admin.fr');
 		$admin->setNom('admin');
 		$admin->setPrenom('admin');
@@ -71,21 +71,21 @@ class UserFixtures extends Fixture
 			'comptable'
 		));
 
-		$commerciale = new User();
+		$commercial = new User();
 		
-		$commerciale->setRoles(['ROLE_COMMERCIALE']);
-		$commerciale->setEmail('commerciale@commerciale.fr');
-		$commerciale->setNom('commerciale');
-		$commerciale->setPrenom('commerciale');
-		$commerciale->setAdresse('404ruedescommerciale');
-		$commerciale->setVille('commerciale');
-		$commerciale->setCodePostal('42720');
-		$commerciale->setDateEmbauche(new DateTime());
-		$commerciale->setMatricule('0123456789');
-		$commerciale->setTelephone('0123456789');
-		$commerciale->setPassword($this->passwordEncoder->encodePassword(
-			$commerciale,
-			'commerciale'
+		$commercial->setRoles(['ROLE_COMMERCIAL']);
+		$commercial->setEmail('commercial@commercial.fr');
+		$commercial->setNom('commercial');
+		$commercial->setPrenom('commercial');
+		$commercial->setAdresse('404ruedescommercial');
+		$commercial->setVille('commercial');
+		$commercial->setCodePostal('42720');
+		$commercial->setDateEmbauche(new DateTime());
+		$commercial->setMatricule('0123456789');
+		$commercial->setTelephone('0123456789');
+		$commercial->setPassword($this->passwordEncoder->encodePassword(
+			$commercial,
+			'commercial'
 		));
 
 		$user = new User();
