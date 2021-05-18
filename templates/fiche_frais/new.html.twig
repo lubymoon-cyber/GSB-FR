@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FicheFraisController!{% endblock %}
+
+{% block body %}
+
+<form>
+    <div class="form-group">
+        <label for="dateFicheFrais">Date</label>
+        <input type="Date" class="form-control" id="dateFicheFrais">
+    </div>
+    <div class="form-group">
+        <label for="LigneFraisForfait">Ligne de frais au forfait</label>
+        <button Onclick="Ajouter()">
+            Ajouter une ligne
+        </button>
+            <script>
+                        function Ajouter(){
+
+                        //ajout d'une ligne
+                        //ajout des colonnes
+
+                        }
+            </script>
+
+        <table>
+            <tr>
+                <td>Frais au forfait</td>
+                <td>Justificatif</td>
+                <td>Quantité</td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-group">
+        <label for="LigneFraisHorsForfait">Ligne de frais hors forfait</label>
+        <button Onclick="Ajouter()">
+            Ajouter une ligne
+        </button>
+            <script>
+                        function Ajouter(){
+
+                        //ajout d'une ligne
+                        //ajout des colonnes
+
+                        }
+            </script>
+    </div>
+</form>
+
+{% endblock %}

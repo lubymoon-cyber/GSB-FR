@@ -57,6 +57,12 @@ class LigneFraisForfait
      */
     private $dateCreationLigneFraisForfait;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=FicheFrais::class, inversedBy="ligneFraisForfaits")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ficheFrais;
+
     public function __construct()
     {
         $this->justificatif = new ArrayCollection();
@@ -159,6 +165,18 @@ class LigneFraisForfait
     public function setDateCreationLigneFraisForfait(\DateTimeInterface $dateCreationLigneFraisForfait): self
     {
         $this->dateCreationLigneFraisForfait = $dateCreationLigneFraisForfait;
+
+        return $this;
+    }
+
+    public function getFicheFrais(): ?FicheFrais
+    {
+        return $this->ficheFrais;
+    }
+
+    public function setFicheFrais(?FicheFrais $ficheFrais): self
+    {
+        $this->ficheFrais = $ficheFrais;
 
         return $this;
     }

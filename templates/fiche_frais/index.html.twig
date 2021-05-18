@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FicheFraisController!{% endblock %}
+
+{% block body %}
+
+<a href="">Créer une fiche de frais</a>
+
+<table>
+    <tr>
+        <td>Etat</td>
+        <td>Nombre de justificatifs</td>
+        <td>Date</td>
+    </tr>
+
+    {% for fichefrais in liste_fiche_frais %}
+        <tr>
+            <td>{{fichefrais.etatFicheFrais.libelle}}</td>
+            <td>{{fichefrais.nbJustificatif}}</td>
+            <td>{{fichefrais.dateFicheFrais|date('d/m/Y')}}</td> 
+        </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

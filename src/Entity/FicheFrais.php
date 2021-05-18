@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FicheFraisRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +50,22 @@ class FicheFrais
      * @ORM\Column(type="datetime")
      */
     private $dateModificationFicheFrais;
+
+    /**
+     * @ORM\OneToMany(targetEntity=LigneFraisForfait::class, mappedBy="ficheFrais", orphanRemoval=true)
+     */
+    private $ligneFraisForfaits;
+
+    /**
+     * @ORM\OneToMany(targetEntity=LigneFraisHorsForfait::class, mappedBy="ficheFrais", orphanRemoval=true)
+     */
+    private $ligneFraisHorsForfaits;
+
+    public function __construct()
+    {
+        $this->ligneFraisForfaits = new ArrayCollection();
+        $this->ligneFraisHorsForfaits = new ArrayCollection();
+    }
 
     // /**
     //  * @ORM\Column(type="integer")
@@ -142,4 +160,64 @@ class FicheFrais
 
     //     return $this;
     // }
+
+    /**
+     * @return Collection|LigneFraisForfait[]
+     */
+    public function getLigneFraisForfaits(): Collection
+    {
+        return $this->ligneFraisForfaits;
+    }
+
+    public function addLigneFraisForfait(LigneFraisForfait $ligneFraisForfait): self
+    {
+        if (!$this->ligneFraisForfaits->contains($ligneFraisForfait)) {
+            $this->ligneFraisForfaits[] = $ligneFraisForfait;
+            $ligneFraisForfait->setFicheFrais($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneFraisForfait(LigneFraisForfait $ligneFraisForfait): self
+    {
+        if ($this->ligneFraisForfaits->removeElement($ligneFraisForfait)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneFraisForfait->getFicheFrais() === $this) {
+                $ligneFraisForfait->setFicheFrais(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LigneFraisHorsForfait[]
+     */
+    public function getLigneFraisHorsForfaits(): Collection
+    {
+        return $this->ligneFraisHorsForfaits;
+    }
+
+    public function addLigneFraisHorsForfait(LigneFraisHorsForfait $ligneFraisHorsForfait): self
+    {
+        if (!$this->ligneFraisHorsForfaits->contains($ligneFraisHorsForfait)) {
+            $this->ligneFraisHorsForfaits[] = $ligneFraisHorsForfait;
+            $ligneFraisHorsForfait->setFicheFrais($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneFraisHorsForfait(LigneFraisHorsForfait $ligneFraisHorsForfait): self
+    {
+        if ($this->ligneFraisHorsForfaits->removeElement($ligneFraisHorsForfait)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneFraisHorsForfait->getFicheFrais() === $this) {
+                $ligneFraisHorsForfait->setFicheFrais(null);
+            }
+        }
+
+        return $this;
+    }
 }
