@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FicheFraisController!{% endblock %}
+{% block title %}Nouvelle fiche de frais{% endblock %}
 
 {% block body %}
+
+<div class="container shadow-lg rounded">
+<div class="card-header" style ="text-align:center"><h1>Créer une fiche de frais</h1></div>
 
 <form>
     <div class="form-group">
         <label for="dateFicheFrais">Date</label>
-        <input type="Date" class="form-control" id="dateFicheFrais">
+        <input type="Date" class="form-control" id="dateFicheFrais" style="width: 15%">
     </div>
+
     <div class="form-group">
         <label for="LigneFraisForfait">Ligne de frais au forfait</label>
-        <button Onclick="Ajouter()">
+        <button Onclick="Ajouter()" class="btn btn-outline-primary my-3">
             Ajouter une ligne
         </button>
             <script>
@@ -29,11 +33,21 @@
                 <td>Justificatif</td>
                 <td>Quantité</td>
             </tr>
+
+{# {% for lignefraisforfait in ligne_frais_forfait %}
+    <tr>
+        <td>{{LigneFraisForfait.fraisForfait.libelle}}</td>
+        <td>{{LigneFraisForfait.justificatif}}</td>
+        <td>{{LigneFraisForfait.quantite}}</td> 
+    </tr>
+{% endfor %} #}
         </table>
     </div>
+    
+    
     <div class="form-group">
         <label for="LigneFraisHorsForfait">Ligne de frais hors forfait</label>
-        <button Onclick="Ajouter()">
+        <button Onclick="Ajouter()" class="btn btn-outline-primary my-3">
             Ajouter une ligne
         </button>
             <script>
@@ -43,8 +57,11 @@
                         //ajout des colonnes
 
                         }
+                        
+                        
             </script>
     </div>
+</div>
 </form>
 
 {% endblock %}
