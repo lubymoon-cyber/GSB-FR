@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle fiche de frais{% endblock %}
+
+{#{% block stylesheets %}#}
+{#{{ parent() }}#}
+{#<style>#}
+{#    table td[class*=col-], table th[class*=col-] {#}
+{#        position: static;#}
+{#        display: table-cell;#}
+{#        float: none;#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+
+{% block body %}
+
+    <div class="container shadow-lg rounded">
+        <div class="card-header" style ="text-align:center"><h1>Créer une fiche de frais</h1></div>
+
+            <div class="form-group">
+                <label for="dateFicheFrais">Date</label>
+                <input type="Date" class="form-control" id="dateFicheFrais" style="width: 15%">
+            </div>
+
+            <div class="form-group">
+{#                <label for="LigneFraisForfait">Ligne de frais au forfait</label>#}
+{#                <button Onclick="Ajouter()" class="btn btn-outline-primary my-3">#}
+{#                    Ajouter une ligne#}
+{#                </button>#}
+{#                <script>#}
+{#                    function Ajouter(){#}
+
+{#                        //ajout d'une ligne#}
+{#                        //ajout des colonnes#}
+
+{#                    }#}
+{#                </script>#}
+                <form action="{{ path('store_fiche_frais') }}" method="post" enctype="multipart/form-data">
+                    <table class="table table-hover table-sm table-light shadow-lg display" id="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Frais au forfait</th>
+                            <th>Prix Unitaire</th>
+                            <th>Quantité</th>
+                            <th>Justificatif</th>
+                            <th>Montant</th>
+                        </tr>
+
+                        </thead>
+                        {% for item in fraisForfaits %}
+                            <tr>
+                                <td>{{item.libelle}}</td>
+                                <td>{{item.montant}} €uro</td>
+                                <td class="form-group">
+                                    <input type="number" class="form-control" id="quantite" name="quantite">
+                                </td>
+                                <td class="form-group">
+                                    <input type="file" class="form-control-file" id="jsutificatif" name="files[]">
+                                </td>
+                                <td class="form-group">
+                                    <input type="number" class="form-control" id="montant" name="montant">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <button type="submit" class="btn btn-info">Submit</button>
+                </form>
+            </div>
+
+
+{#            <div class="form-group">#}
+{#                <label for="LigneFraisHorsForfait">Ligne de frais hors forfait</label>#}
+{#                <button Onclick="Ajouter()" class="btn btn-outline-primary my-3">#}
+{#                    Ajouter une ligne#}
+{#                </button>#}
+{#                <script>#}
+{#                    function Ajouter(){#}
+
+{#                        //ajout d'une ligne#}
+{#                        //ajout des colonnes#}
+
+{#                    }#}
+
+
+{#                </script>#}
+{#            </div>#}
+    </div>
+
+{% endblock %}

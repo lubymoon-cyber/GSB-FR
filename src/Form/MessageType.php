@@ -9,19 +9,25 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class MessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('objet', NULL, [
+            ->add('objet', TextType::class, [
                 'attr'=> [
-                    'class'=>'text-primary'
+                    'class'=>'text-primary',
                 ],
-                'label'=>'objet du message'
+                'label'=>'Objet'
+                
             ])
+
+            
+            
             ->add('message')
+            
             // ->add('utilisateurMessagerie',EntityType::class,[
             //     "class" => User::class,
             //     "choice_label" => "nom"
@@ -30,6 +36,7 @@ class MessageType extends AbstractType
             ->add('utilisateurDestinataireMessagerie',EntityType::class,[
                 "class" => User::class,
                 "choice_label" => "nom"
+
             ])
             // ->add('utilisateurExpediteurMessagerie',EntityType::class,[
             //     "class" => User::class,

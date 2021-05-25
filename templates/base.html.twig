@@ -119,8 +119,23 @@
                         <h6 class="collapse-header">Messagerie:</h6>
                         <a class="collapse-item" href="{{ path('message_index') }}">Liste des messages</a>
                         <a class="collapse-item" href="{{ path('message_new') }}">Ecrire un message</a>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                    </div>
+                </div>
+            </li>
 
+            <!-- Nav Item - fiche-frais Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsefiche-frais"
+                   aria-expanded="true" aria-controls="collapsefiche-frais">
+                    <i class="fas fa-fw fa-fiche-frais"></i>
+                    <span>Fiche de Frais</span>
+                </a>
+                <div id="collapsefiche-frais" class="collapse" aria-labelledby="headingfiche-frais"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Messagerie:</h6>
+                        <a class="collapse-item" href="{{ path('fiche_frais') }}">Liste des Fiches de Frais</a>
+                        <a class="collapse-item" href="{{ path('fiche_frais_new') }}">Nouvelle Fiche de Frais</a>
                     </div>
                 </div>
             </li>
@@ -134,7 +149,7 @@
             </div> #}
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            {# <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -152,10 +167,10 @@
                         <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
-            </li>
+            </li> #}
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
+            {# <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
@@ -166,7 +181,7 @@
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
-            </li>
+            </li> #}
 
 {#            <!-- Divider --> #}
 {#            <hr class="sidebar-divider d-none d-md-block"> #}

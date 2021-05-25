@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Repository\PostRepository;
 use App\Entity\User;
+use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,14 +22,13 @@ class ApiPostController extends AbstractController
      * Permet de récupérer la liste des users.
      * @Route("/api/user/list", name="api_user_list", methods={"GET", "POST"})
      */
-    public function apiGetUser(UserRepository $userRepository): JsonResponse
+    public function apiGetUser(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
-        //dd($users);
+        dd($users);
         $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
 
-        return JsonResponse::fromJsonString($serializer->serialize($users, 'json'));
-        
-        //return JsonResponse::fromJsonString($this->serializer->serialize($users, 'json'));
+        return Response::fromJsonString($serializer->serialize($users, 'json'));
+    
     }
 }
