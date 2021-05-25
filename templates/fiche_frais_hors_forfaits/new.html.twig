@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvelle fiche de frais{% endblock %}
+{% block title %}Nouvelle fiche de frais hors forfait{% endblock %}
 
 {% block body %}
 
     <div class="container shadow-lg rounded">
-        <div class="card-header" style ="text-align:center"><h1>Créer une fiche de frais</h1></div>
+        <div class="card-header" style ="text-align:center"><h1>Créer une fiche de frais hors forfait</h1></div>
 
             <div class="form-group">
                 <label for="dateFicheFrais">Date</label>
@@ -17,7 +17,7 @@
                     <table class="table table-hover table-sm table-light shadow-lg display" id="table">
                         <thead class="thead-light">
                         <tr>
-                            <th>Frais au forfait</th>
+                            <th>Frais au hors forfait</th>
                             <th>Prix Unitaire</th>
                             <th>Quantité</th>
                             <th>Justificatif</th>
@@ -25,7 +25,7 @@
                         </tr>
 
                         </thead>
-                        {% for item in fraisForfaits %}
+                        {% for item in fraisHorsForfaits %}
                             <tr>
                                 <td>{{item.libelle}}</td>
                                 <td>{{item.montant}} €uro</td>

@@ -130,16 +130,4 @@ class FicheFrais
 
         return $this;
     }
-
-    // public function getMontantValide(): ?int
-    // {
-    //     return $this->montantValide;
-    // }
-
-    // public function setMontantValide(int $montantValide): self
-    // {
-    //     $this->montantValide = $montantValide;
-
-    //     return $this;
-    // }
 }

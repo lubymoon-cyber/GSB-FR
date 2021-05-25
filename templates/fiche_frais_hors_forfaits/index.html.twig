@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FichesFrais{% endblock %}
+
+{% block body %}
+
+<div class="container shadow-lg rounded">
+<div class="card-header" style ="text-align:center"><h1>Fiches de frais</h1></div>
+
+<a class="btn btn-outline-primary my-3 btn-lg" href="{{ path('fiche_frais_hors_forfait_new') }}"><i class="fas fa-plus" style="color:;">&nbsp;&nbsp;</i>Créer une fiche de frais</a>
+
+<table class="table table-hover table-sm table-light shadow-lg display col-12" id="table">
+    <thead class="thead-light">
+        <tr>
+            <td>Etat</td>
+            <td>Nombre de justificatifs</td>
+            <td>Date</td>
+        </tr>
+    </thead>
+    <tbody>
+
+    {% for fichefrais in liste_fiche_frais %}
+        <tr>
+            <td>{{fichefrais.etatFicheFrais.libelle}}</td>
+            <td>{{fichefrais.nbJustificatif}}</td>
+            <td>{{fichefrais.dateFicheFrais|date('d/m/Y')}}</td> 
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}
