@@ -7,13 +7,13 @@
     <div class="container shadow-lg rounded">
         <div class="card-header" style ="text-align:center"><h1>Créer une fiche de frais</h1></div>
 
+          <form action="{{ path('store_fiche_frais') }}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="dateFicheFrais">Date</label>
-                <input type="Date" class="form-control" id="dateFicheFrais" style="width: 15%">
+                <input type="Date" class="form-control" id="dateFicheFrais" name="dateFicheFrais" style="width: 15%">
             </div>
 
             <div class="form-group">
-                <form action="{{ path('store_fiche_frais') }}" method="post" enctype="multipart/form-data">
                     <table class="table table-hover table-sm table-light shadow-lg display" id="table">
                         <thead class="thead-light">
                         <tr>
@@ -21,7 +21,6 @@
                             <th>Prix Unitaire</th>
                             <th>Quantité</th>
                             <th>Justificatif</th>
-                            <th>Montant</th>
                         </tr>
 
                         </thead>
@@ -30,19 +29,16 @@
                                 <td>{{item.libelle}}</td>
                                 <td>{{item.montant}} €uro</td>
                                 <td class="form-group">
-                                    <input type="number" class="form-control" id="quantite" name="quantite">
+                                    <input type="number" class="form-control" id="quantite_{{item.id}}" name="quantite[{{item.id}}]">
                                 </td>
                                 <td class="form-group">
-                                    <input type="file" class="form-control-file" id="jsutificatif" name="files[]">
-                                </td>
-                                <td class="form-group">
-                                    <input type="number" class="form-control" id="montant" name="montant">
+                                    <input type="file" class="form-control-file" id="jsutificatif_{{item.id}}" name="files[]">
                                 </td>
                             </tr>
                         {% endfor %}
                     </table>
                     <button type="submit" class="btn btn-info">Submit</button>
-                </form>
             </div>
+          </form>
     </div>
 {% endblock %}

@@ -84,6 +84,7 @@ class FicheFraisController extends AbstractController
      */
     public function storeFicheFrais(EntityManagerInterface $manager, Request $request): Response
     {
+	dd($request);
         $user = $this->getUser();
         $dateNow = new DateTime(null, new DateTimeZone('Europe/Paris'));
         $dateEemission = DateTime::createFromFormat('Y-m-d', $request->get('dateFicheFrais'));
