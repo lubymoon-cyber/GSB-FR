@@ -49,6 +49,32 @@ class FicheFraisController extends AbstractController
         ]);
     }
 
+    // /**
+    //  * @Route("/fiche/frais/hors/forfait", name="fiche_frais_hors_forfait")
+    //  */
+    // public function index(FicheFraisRepository $repo): Response
+    // {
+    //     $liste = $repo->findAll();
+
+    //     return $this->render('fiche_frais_hors_forfait/index.html.twig', [
+    //         'controller_name' => 'FicheFraisController',
+    //         'liste_fiche_frais' => $liste,
+    //     ]);
+    // }
+
+    // /**
+    //  * @Route("/fiche/frais/hors/forfait/new", name="fiche_frais_hors_forfait_new")
+    //  * @param EntityManagerInterface $manager
+    //  * @return Response
+    //  */
+    // public function newFicheFrais(EntityManagerInterface $manager): Response
+    // {
+    //     $fraisForfaits = $manager->getRepository(FraisForfait::class)->findAll();
+    //     return $this->render('fiche_frais_hors_forfait/new.html.twig', [
+    //         'fraisForfaits' => $fraisForfaits
+    //     ]);
+    // }
+
     /**
      * @Route("/fiche/frais/store", name="store_fiche_frais", methods={"GET","POST"})
      * @param EntityManagerInterface $manager
