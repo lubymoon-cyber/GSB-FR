@@ -12,23 +12,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiPostController extends AbstractController
 {
-    public $serializer;
+     public $serializer;
 
-    public function __construct()
-    {
-        $this->serializer = \JMS\Serializer\SerializerBuilder::create()->build();
-    }
     /**
      * Permet de récupérer la liste des users.
      * @Route("/api/user/list", name="api_user_list", methods={"GET", "POST"})
      */
+    
     public function apiGetUser(UserRepository $userRepository): Response
     {
-        $users = $userRepository->findAll();
-        dd($users);
+        $userRepository = new Response();
+        return $this->json($userRepository);
         $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
-
-        return Response::fromJsonString($serializer->serialize($users, 'json'));
-    
     }
 }
