@@ -36,13 +36,13 @@
 								</tr>
 							{% endfor %}
 						</table>
-							<button type="button" class="btn btn-info" id="togg1">Hors Forfait</button>
-								<div id="d1">
+							<button type="button" class="btn btn-info mb-3" id="togg1">Hors Forfait</button>
+								<div id="d1" style="display:none">
 									<div class="container shadow-lg rounded">
 										<div class="card-header" style ="text-align:center"><h1>Fiche de frais hors forfait</h1></div>
 											<div class="form-group">
 												<label for="dateFicheFraisHorsForfait">Date</label>
-												<input type="Date" class="form-control" id="dateFicheFraisHorsForfait" style="width: 15%">
+												<input type="Date" class="form-control" id="dateFicheFraisHorsForfait" name="dateFicheFraisHorsForfait" style="width: 15%">					
 											</div>
 
 										<div class="form-group">
@@ -63,13 +63,13 @@
 													<td>{{item.libelle}}</td>
 													<td>{{item.montant}} €uro</td>
 													<td class="form-group">
-														<input type="number" class="form-control" id="quantite" name="quantite">
+														<input type="number" class="form-control" id="quantitehf_{{item.id}}" name="quantitehf[{{item.id}}]">
 													</td>
 													<td class="form-group">
-														<input type="file" class="form-control-file" id="jsutificatif" name="files[]">
+														<input type="file" class="form-control-file" id="jsutificatifhf_{{item.id}}" name="fileshf[]">
 													</td>
 													<td class="form-group">
-														<input type="number" class="form-control" id="montant" name="montant">
+														<input type="number" class="form-control" id="montanthf_{{item.id}}" name="montanthf[{{item.id}}]">
 													</td>
 												</tr>
 											{% endfor %}
