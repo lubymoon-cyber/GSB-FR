@@ -36,61 +36,51 @@
 								</tr>
 							{% endfor %}
 						</table>
-							<button type="button" class="btn btn-info mb-3" id="togg1">Hors Forfait</button>
-								<div id="d1" style="display:none">
+							<button type="button" class="btn btn-info mb-3" id="togg1">Ajouter un Hors Forfait</button>
+								<div id="d1">
 									<div class="container shadow-lg rounded">
-										<div class="card-header" style ="text-align:center"><h1>Fiche de frais hors forfait</h1></div>
-											<div class="form-group">
-												<label for="dateFicheFraisHorsForfait">Date</label>
-												<input type="Date" class="form-control" id="dateFicheFraisHorsForfait" name="dateFicheFraisHorsForfait" style="width: 15%">					
-											</div>
-
 										<div class="form-group">
 											<form action="{{ path('store_fiche_frais') }}" method="post" enctype="multipart/form-data">
 												<table class="table table-hover table-sm table-light shadow-lg display" id="table">
 												<thead class="thead-light">
 											<tr>
-												<th>Frais au forfait hors forfait</th>
-												<th>Prix Unitaire</th>
-												<th>Quantité</th>
+												<th>Frais hors forfait</th>
+												<th>Date</th>
 												<th>Justificatif</th>
 												<th>Montant</th>
 											</tr>
 
-											</thead>
-											{% for item in fraisForfaits %}
-												<tr>
-													<td>{{item.libelle}}</td>
-													<td>{{item.montant}} €uro</td>
-													<td class="form-group">
-														<input type="number" class="form-control" id="quantitehf_{{item.id}}" name="quantitehf[{{item.id}}]">
-													</td>
-													<td class="form-group">
-														<input type="file" class="form-control-file" id="jsutificatifhf_{{item.id}}" name="fileshf[]">
-													</td>
-													<td class="form-group">
-														<input type="number" class="form-control" id="montanthf_{{item.id}}" name="montanthf[{{item.id}}]">
-													</td>
-												</tr>
-											{% endfor %}
-										</table>
-										<button type="submit" class="btn btn-info">Submit</button>
-									</form>
+												<tbody id="tbodyFHF">
+												</tbody>
+												</thead>
+												</table>
+	
+							<button type="submit" class="btn btn-info">Submit</button>
+											</form>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
 
-							<script type="text/javascript">
-								let togg1 = document.getElementById("togg1");
-								let d1 = document.getElementById("d1");
-								togg1.addEventListener("click", () => {
-									if(getComputedStyle(d1).display != "none"){
-										d1.style.display = "none";
-									} else {
-										d1.style.display = "block";
-									}
-								});
-							</script>
+						<script type="text/javascript">
+							let togg1 = document.getElementById("togg1");
+							let d1 = document.getElementById("d1");
+							togg1.addEventListener("click", () => {
+						//get tbody
+							var refTable = document.getElementById("tbodyFHF");
+						//insert Row
+							var nouvelleLigne = refTable.insertRow(-1);
+						//insert Cells x4
+							var nouvelleCell1 = nouvelleLigne.insertCell(-1);
+							var nouvelleCell2 = nouvelleLigne.insertCell(-1);
+							var nouvelleCell3 = nouvelleLigne.insertCell(-1);
+							var nouvelleCell4 = nouvelleLigne.insertCell(-1);
+						//HTML de chaque cellule en JS (non cellule + innerhtml)
+							nouvelleCell1.innerHTML = "<input type='text' class='form-control' id='FHF' name'FHF' />";
+							nouvelleCell2.innerHTML = "<input type='text' class='form-control' id='Date' name'Date' />";
+							nouvelleCell3.innerHTML = "<input type='text' class='form-control' id='Justificatif' name'Justificatif' />";
+							nouvelleCell4.innerHTML = "<input type='text' class='form-control' id='Montant' name'Montant' />";
+						});
+						</script>
 				</form>
 			</div>
 		</div>
