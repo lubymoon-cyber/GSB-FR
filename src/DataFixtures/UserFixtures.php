@@ -110,6 +110,7 @@ class UserFixtures extends Fixture
 		$manager->persist($superAdmin);
 		$manager->persist($admin);
 		$manager->persist($comptable);
+		$manager->persist($commercial);
 		$manager->persist($user);
         $manager->flush();
     }

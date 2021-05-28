@@ -37,7 +37,6 @@ class PostRepository
                 comptablesetMatricule(0123456789),
                 comptablesetTelephone(0123456789),
 
-
                 commercialsetEmail(commercial@commercial.fr),
                 commercialsetNom(commercial),
                 commercialsetPrenom(commercial),
@@ -47,7 +46,6 @@ class PostRepository
                 commercialsetDateEmbauche(new DateTime()),
                 commercialsetMatricule(0123456789),
                 commercialsetTelephone(0123456789),
-
 
                 usersetEmail(user@user.fr),
                 usersetNom(user),

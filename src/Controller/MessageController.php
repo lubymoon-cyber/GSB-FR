@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use DateTime;
 use DateTimeZone;
 use App\Form\MessageType;
@@ -13,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 /**
  * @Route("/message")
@@ -57,7 +55,6 @@ class MessageController extends AbstractController
             $message->setUtilisateurExpediteurMessagerie($this->getUser());
             $entityManager->persist($message);
             $entityManager->flush();
-
 
             return $this->redirectToRoute('message_index');
         }

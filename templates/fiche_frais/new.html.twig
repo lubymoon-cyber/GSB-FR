@@ -4,64 +4,84 @@
 
 {% block body %}
 
-<div class="container shadow-lg rounded">
-<div class="card-header" style ="text-align:center"><h1>Créer une fiche de frais</h1></div>
+	<div class="container shadow-lg rounded">
+		<div class="card-header" style ="text-align:center"><h1>Créer une fiche de frais</h1></div>
 
-<form>
-    <div class="form-group">
-        <label for="dateFicheFrais">Date</label>
-        <input type="Date" class="form-control" id="dateFicheFrais" style="width: 15%">
-    </div>
+			<form action="{{ path('store_fiche_frais') }}" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="dateFicheFrais">Date</label>
+					<input type="Date" class="form-control" id="dateFicheFrais" name="dateFicheFrais" style="width: 15%">
+				</div>
 
-    <div class="form-group">
-        <label for="LigneFraisForfait">Ligne de frais au forfait</label>
-        <button Onclick="Ajouter()" class="btn btn-outline-primary my-3">
-            Ajouter une ligne
-        </button>
-            <script>
-                        function Ajouter(){
+				<div class="form-group">
+					<table class="table table-hover table-sm table-light shadow-lg display" id="table">
+						<thead class="thead-light">
+							<tr>
+								<th>Frais au forfait</th>
+								<th>Prix Unitaire</th>
+								<th>Quantité</th>
+								<th>Justificatif</th>
+							</tr>
+						</thead>
+						{% for item in fraisForfaits %}
+							<tr>
+								<td>{{item.libelle}}</td>
+								<td>{{item.montant}} €uro</td>
+								<td class="form-group">
+									<input type="number" class="form-control" id="quantite_{{item.id}}" name="quantite[{{item.id}}]">
+								</td>
+								<td class="form-group">
+									<input type="file" class="form-control-file" id="jsutificatif_{{item.id}}" name="files[]">
+								</td>
+								</tr>
+							{% endfor %}
+						</table>
+							<button type="button" class="btn btn-info mb-3" id="togg1">Ajouter un Hors Forfait</button>
+								<div id="d1">
+									<div class="container shadow-lg rounded">
+										<div class="form-group">
+											<form action="{{ path('store_fiche_frais') }}" method="post" enctype="multipart/form-data">
+												<table class="table table-hover table-sm table-light shadow-lg display" id="table">
+												<thead class="thead-light">
+											<tr>
+												<th>Frais hors forfait</th>
+												<th>Date</th>
+												<th>Justificatif</th>
+												<th>Montant</th>
+											</tr>
 
-                        //ajout d'une ligne
-                        //ajout des colonnes
+												<tbody id="tbodyFHF">
+												</tbody>
+												</thead>
+												</table>
+	
+							<button type="submit" class="btn btn-info">Submit</button>
+											</form>
+										</div>
+									</div>
+								</div>
 
-                        }
-            </script>
-
-        <table>
-            <tr>
-                <td>Frais au forfait</td>
-                <td>Justificatif</td>
-                <td>Quantité</td>
-            </tr>
-
-{# {% for lignefraisforfait in ligne_frais_forfait %}
-    <tr>
-        <td>{{LigneFraisForfait.fraisForfait.libelle}}</td>
-        <td>{{LigneFraisForfait.justificatif}}</td>
-        <td>{{LigneFraisForfait.quantite}}</td> 
-    </tr>
-{% endfor %} #}
-        </table>
-    </div>
-    
-    
-    <div class="form-group">
-        <label for="LigneFraisHorsForfait">Ligne de frais hors forfait</label>
-        <button Onclick="Ajouter()" class="btn btn-outline-primary my-3">
-            Ajouter une ligne
-        </button>
-            <script>
-                        function Ajouter(){
-
-                        //ajout d'une ligne
-                        //ajout des colonnes
-
-                        }
-                        
-                        
-            </script>
-    </div>
-</div>
-</form>
-
+						<script type="text/javascript">
+							let togg1 = document.getElementById("togg1");
+							let d1 = document.getElementById("d1");
+							togg1.addEventListener("click", () => {
+						//get tbody
+							var refTable = document.getElementById("tbodyFHF");
+						//insert Row
+							var nouvelleLigne = refTable.insertRow(-1);
+						//insert Cells x4
+							var nouvelleCell1 = nouvelleLigne.insertCell(-1);
+							var nouvelleCell2 = nouvelleLigne.insertCell(-1);
+							var nouvelleCell3 = nouvelleLigne.insertCell(-1);
+							var nouvelleCell4 = nouvelleLigne.insertCell(-1);
+						//HTML de chaque cellule en JS (non cellule + innerhtml)
+							nouvelleCell1.innerHTML = "<input type='text' class='form-control' id='FHF' name'FHF' />";
+							nouvelleCell2.innerHTML = "<input type='text' class='form-control' id='Date' name'Date' />";
+							nouvelleCell3.innerHTML = "<input type='text' class='form-control' id='Justificatif' name'Justificatif' />";
+							nouvelleCell4.innerHTML = "<input type='text' class='form-control' id='Montant' name'Montant' />";
+						});
+						</script>
+				</form>
+			</div>
+		</div>
 {% endblock %}
