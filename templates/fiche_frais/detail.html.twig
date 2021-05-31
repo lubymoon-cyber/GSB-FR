@@ -4,9 +4,13 @@
 
 {% block body %}
 
+{% if is_granted('ROLE_COMPTABLE') %}
+<form method="post" action="{{ path('update_fiche_frais_comptable_save')}}">
+{% endif %}
 <div class="container bg-light mb-3">
   <div class="card-header">
   <h1>Détail de la fiche de frais</h1>
+  <input type="hidden" value="{{ficheFrais.id}}" name="idFicheFrais" />
   </div>
   	<div class="card-body">
 
@@ -15,13 +19,17 @@
     <li class="list-group-item">Date de la fiche de frais : {{ficheFrais.dateFicheFrais|date("d/m/Y")}}</li>
     <li class="list-group-item">Date de création : {{ficheFrais.dateCreationFicheFrais|date("d/m/Y")}}</li>
     <li class="list-group-item">Date de modification : {{ficheFrais.dateModificationFicheFrais|date("d/m/Y")}}</li>
-    <li class="list-group-item">Etat : {% if is_granted('ROLE_COMPTABLE') %}
-            <select>
-              <option value="">--Choisir un état--</option>
+    <li class="list-group-item">Etat : 
+    {% if is_granted('ROLE_COMPTABLE') %}
+            <select name="etat">
+            <option value="">--Choisir un état--</option>
+            {% for item in etats %}
+                <option value="{{ item.id }}" {% if item.id == ficheFrais.etatFicheFrais.id %}selected{% endif %}>{{ item.libelle }}</option>
+            {% endfor %}
             </select>
-          {% else %}
-                {{ficheFrais.etatFicheFrais.libelle }}
-          {% endif %}</li>
+    {% else %}
+          {{ficheFrais.etatFicheFrais.libelle }}
+    {% endif %}</li>
   </ul>
       <br> 
    <h5 class="text-center">Lignes Frais Forfaits</h5>
@@ -52,8 +60,11 @@
         <td>{{item.fraisForfait.libelle}}</td>
         <td>
           {% if is_granted('ROLE_COMPTABLE') %}
-            <select name="">
+            <select name="statut[{{item.id}}]">
             <option value="">--Choisir un statut--</option>
+            {% for item2 in statuts %}
+                <option value="{{ item2.id }}" {% if item2.id == item.statutLigneFraisForfait.id %}selected{% endif %}>{{ item2.libelle }}</option>
+            {% endfor %}
             </select>
           {% else %}
                 {{item.statutLigneFraisForfait.libelle}}
@@ -102,11 +113,10 @@
         <td>{{item.libelle}}</td>
         <td>
           {% if is_granted('ROLE_COMPTABLE') %}
-            <select>
+            <select name="statutFhf[{{item.id}}]">
               <option value="" id="statut-select">--Choisir un statut--</option>
-              {% for item in ficheFrais.etatFicheFrais %}
-                <tr>
-                <td>{{item.statutLigneFraisHorsForfait.libelle}}</td>
+              {% for item3 in statuts %}
+                <option value="{{item3.id}}" {% if item3.id == item.statutLigneFraisHorsForfait.id %}selected{% endif %}>{{item3.libelle}}</option>
               {% endfor %}
             </select>
           {% else %}
@@ -124,7 +134,10 @@
    </table>
 	</div>
 </div>
-					
-				
+
+{% if is_granted('ROLE_COMPTABLE') %}
+  <button class="btn btn-success">Enregistrer</button>
+  </form>	
+{% endif %}		
 			
 {% endblock %}

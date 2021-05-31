@@ -13,6 +13,9 @@
 <table class="table table-hover table-sm table-light shadow-lg display col-12" id="table">
     <thead class="thead-light">
         <tr>
+            {% if is_granted('ROLE_COMPTABLE') %}
+                <th>Visiteur</th>
+            {% endif %}
             <th>Etat</td>
             <th>Nombre de justificatifs</th>
             <th>Date</th>
@@ -23,6 +26,9 @@
 
     {% for fichefrais in liste_fiche_frais %}
         <tr>
+            {% if is_granted('ROLE_COMPTABLE') %}
+                <td>{{fichefrais.utilisateurFicheFrais.prenom}} {{fichefrais.utilisateurFicheFrais.nom}}</td>
+            {% endif %}
             <td>{{fichefrais.etatFicheFrais.libelle}}</td>
             <td>{{fichefrais.nbJustificatif}}</td>
             <td>{{fichefrais.dateFicheFrais|date('d/m/Y')}}</td>

@@ -28,7 +28,13 @@ class FicheFraisController extends AbstractController
      */
     public function index(FicheFraisRepository $repo): Response
     {
-        $liste = $repo->findAll();
+        $user = $this->getUser();
+        if (in_array("ROLE_ADMIN", $user->getRoles()) || in_array("ROLE_SUPER_ADMIN", $user->getRoles()) || in_array("ROLE_COMPTABLE", $user->getRoles())) {
+            $liste = $repo->findAll();
+        } else {
+            $liste = $repo->findByUtilisateurFicheFrais($user);
+        }
+        
 
         return $this->render('fiche_frais/index.html.twig', [
             'controller_name' => 'FicheFraisController',
@@ -50,18 +56,6 @@ class FicheFraisController extends AbstractController
     }
 
     /**
-     * @Route("/fiche/frais/{id}", name="fiche_frais_detail")
-     */
-    public function detailFiche(FicheFrais $id)
-    {
-        return $this->render(
-            'fiche_frais/detail.html.twig', [
-                'ficheFrais' =>$id
-        ]);
-
-    }
-
-    /**
      * @Route("/fiche/frais/store", name="store_fiche_frais", methods={"GET","POST"})
      * @param EntityManagerInterface $manager
      * @param Request $request
@@ -70,7 +64,7 @@ class FicheFraisController extends AbstractController
      */
     public function storeFicheFrais(EntityManagerInterface $manager, Request $request): Response
     {
-	dd($request);
+        //dd($request);
         $user = $this->getUser();
         $dateNow = new DateTime(null, new DateTimeZone('Europe/Paris'));
         $dateEemission = DateTime::createFromFormat('Y-m-d', $request->get('dateFicheFrais'));
@@ -78,56 +72,127 @@ class FicheFraisController extends AbstractController
         $ficheFrais->setDateCreationFicheFrais($dateNow);
         $ficheFrais->setDateFicheFrais($dateEemission);
         $ficheFrais->setDateModificationFicheFrais($dateNow);
-        $ficheFrais->setEtatFicheFrais($manager->getRepository(EtatFiche::class)->find(1));
-        $ficheFrais->setNbJustificatif(1);
+        $ficheFrais->setEtatFicheFrais($manager->getRepository(EtatFiche::class)->findOneByLibelle("Fiche créée, saisie en cours"));
+        $ficheFrais->setNbJustificatif(0);
         $ficheFrais->setUtilisateurFicheFrais($user);
         $manager->persist($ficheFrais);
         $manager->flush();
         $dateJustificatifs = $request->request->get('dateJustificatifs');
-        $quantites = $request->request->get('quantites');
-        $montants = $request->request->get('montants');
-        $forfaits = $request->request->get('forfaits');
+        $dateJustificatifsFhf = $request->request->get('dateJustificatifsFhf');
 
-        foreach ($request->files->get('files') as $key => $file){
+        $quantites = $request->request->get('quantite');
+        $fichiers = $request->files->get('files');
+        foreach ($quantites as $idFraisForfait=>$qte){
+            $ligneff = new LigneFraisForfait();
+            $ligneff->setDateCreationLigneFraisForfait($dateNow);
+            $ligneff->setQuantite($qte);
+            $ligneff->setDateLigneFraisForfait($dateNow);
+            $ligneff->setUtilisateurLigneFraisForfait($user);
+            $ligneff->setFraisForfait($manager->getRepository(FraisForfait::class)->find($idFraisForfait));
+            $ligneff->setStatutLigneFraisForfait($manager->getRepository(StatutLigne::class)->findOneByLibelle("Saisie"));
+            $ligneff->setFicheFrais($ficheFrais);
+            $manager->persist($ligneff);
+            $manager->flush();
 
-            $filesystem = new Filesystem();
+            if ($fichiers[$idFraisForfait] != null) {
+                $filesystem = new Filesystem();
 
-            try {
-                $filesystem->mkdir('uploads/tmp/');
-                $filesystem->mkdir('uploads/justificatif/');
-            } catch (IOExceptionInterface $exception) {
-                echo "An error occurred while creating your directory at ".$exception->getPath();
+                try {
+                    $filesystem->mkdir(sys_get_temp_dir().'/'.random_int(0, 1000));
+                    $filesystem->mkdir('uploads/tmp/');
+                    $filesystem->mkdir('uploads/justificatif/');
+                } catch (IOExceptionInterface $exception) {
+                    echo "An error occurred while creating your directory at ".$exception->getPath();
+                }
+
+                $tempFile = $filesystem->tempnam($this->getParameter('uploads_directory') . '/tmp', 'justif_');
+                $finalFile = $filesystem->tempnam($this->getParameter('uploads_directory') . '/justificatif', 'justif_');
+                $filesystem->remove($tempFile);
+                $orinalNameFile = $fichiers[$idFraisForfait]->getClientOriginalName();
+
+                $justificatif = new Justificatif();
+                $justificatif->setChemin($finalFile);
+                $justificatif->setDateCreationJustificatif($dateNow);
+                $justificatif->setDateProductionJustificatif(DateTime::createFromFormat('Y-m-d', $dateJustificatifs[$idFraisForfait]));
+                $justificatif->setMontant($qte * $ligneff->getFraisForfait()->getMontant());
+                $justificatif->setUtilisateurJustificatif($user);
+                $manager->persist($justificatif);
+                $manager->flush();
+
+                $ligneff->addJustificatif($justificatif);
+                $ficheFrais->setNbJustificatif($ficheFrais->getNbJustificatif() + 1);
+                $manager->flush();
             }
-
-            $tempFile = $filesystem->tempnam($this->getParameter('uploads_directory') . '/tmp', 'justif_');
-            $finalFile = $filesystem->tempnam($this->getParameter('uploads_directory') . '/justificatif', 'justif_');
-            $filesystem->remove($tempFile);
-            $orinalNameFile = $file->getClientOriginalName();
-            $justifacatif = new Justificatif();
-            $justifacatif->setChemin($finalFile);
-            $justifacatif->setDateCreationJustificatif($dateNow);
-            $justifacatif->setDateProductionJustificatif(DateTime::createFromFormat('Y-m-d', $dateJustificatifs[$key]));
-            $justifacatif->setMontant($montants[$key]);
-            $justifacatif->setUtilisateurJustificatif($user);
-            $manager->persist($justifacatif);
-            $manager->flush();
-            $ligneFraisForfait = new LigneFraisForfait();
-            $ligneFraisForfait->setDateCreationLigneFraisForfait($dateNow);
-            $ligneFraisForfait->setDateLigneFraisForfait($dateEemission);
-            $ligneFraisForfait->setFicheFrais($ficheFrais);
-            $ligneFraisForfait->setFraisForfait($manager->getRepository(FraisForfait::class)->findOneBy(['libelle' => $forfaits[$key]]));
-            $ligneFraisForfait->setDateCreationLigneFraisForfait($dateNow);
-            $ligneFraisForfait->setQuantite($quantites[$key]);
-            $ligneFraisForfait->setUtilisateurLigneFraisForfait($user);
-            $ligneFraisForfait->setStatutLigneFraisForfait($manager->getRepository(StatutLigne::class)->find(1));
-            $manager->persist($ligneFraisForfait);
-            $manager->flush();
-            $ficheFrais->setNbJustificatif($key + 1);
-            $manager->flush();
         }
 
-        return $this->redirectToRoute('fiche_frais_new');
+        $libelleFhf = $request->request->get('libelleFhf');
+        $dateFhf = $request->request->get('dateFhf');
+        $justificatifFhf = $request->files->get('justificatifFhf');
+        $montantFhf = $request->request->get('montantFhf');
+        foreach ($montantFhf as $key=>$valeur){
+            $lignefhf = new LigneFraisHorsForfait();
+            $lignefhf->setDateCreationLigneFraisHorsForfait($dateNow);
+            $lignefhf->setMontant($valeur);
+            $lignefhf->setDateLigneFraisHorsForfait(DateTime::createFromFormat('Y-m-d', $dateFhf[$key]));
+            $lignefhf->setUtilisateurLigneFraisHorsForfait($user);
+            $lignefhf->setStatutLigneFraisHorsForfait($manager->getRepository(StatutLigne::class)->findOneByLibelle("Saisie"));
+            $lignefhf->setHorsClassification(false);
+            $lignefhf->setLibelle($libelleFhf[$key]);
+            $lignefhf->setFicheFrais($ficheFrais);
+            $manager->persist($lignefhf);
+            $manager->flush();
+
+            if ($justificatifFhf[$key] != null) {
+                $filesystem = new Filesystem();
+
+                try {
+                    $filesystem->mkdir(sys_get_temp_dir().'/'.random_int(0, 1000));
+                    $filesystem->mkdir('uploads/tmp/');
+                    $filesystem->mkdir('uploads/justificatif/');
+                } catch (IOExceptionInterface $exception) {
+                    echo "An error occurred while creating your directory at ".$exception->getPath();
+                }
+
+                $tempFile = $filesystem->tempnam($this->getParameter('uploads_directory') . '/tmp', 'justif_');
+                $finalFile = $filesystem->tempnam($this->getParameter('uploads_directory') . '/justificatif', 'justif_');
+                $filesystem->remove($tempFile);
+                $orinalNameFile = $justificatifFhf[$key]->getClientOriginalName();
+
+                $justificatif = new Justificatif();
+                $justificatif->setChemin($finalFile);
+                $justificatif->setDateCreationJustificatif($dateNow);
+                $justificatif->setDateProductionJustificatif(DateTime::createFromFormat('Y-m-d', $dateJustificatifsFhf[$key]));
+                $justificatif->setMontant($valeur);
+                $justificatif->setUtilisateurJustificatif($user);
+                $manager->persist($justificatif);
+                $manager->flush();
+
+                $lignefhf->addJustificatif($justificatif);
+                $ficheFrais->setNbJustificatif($ficheFrais->getNbJustificatif() + 1);
+                $manager->flush();
+            }
+        }
+
+        return $this->redirectToRoute('fiche_frais');
     }
+
+    /**
+     * @Route("/fiche/frais/{id}", name="fiche_frais_detail")
+     */
+    public function detailFiche(FicheFrais $id, EntityManagerInterface $manager)
+    {
+        $statuts = $manager->getRepository(StatutLigne::class)->findAll();
+        $etats = $manager->getRepository(EtatFiche::class)->findAll();
+
+        return $this->render(
+            'fiche_frais/detail.html.twig', [
+            'ficheFrais' =>$id,
+            'statuts' => $statuts,
+            'etats' => $etats
+        ]);
+    }
+
+    
 
     /**
      * @Route("/fiche/frais/edit/{id}", name="fiche_frais_edit")
@@ -143,7 +208,7 @@ class FicheFraisController extends AbstractController
     }
 
     /**
-     * @Route("/fichefrais/update", name="update_fiche_frais", methods={"GET","POST"})
+     * @Route("/fiche/frais/update", name="update_fiche_frais", methods={"GET","POST"})
      * @param EntityManagerInterface $manager
      * @param Request $request
      * @return Response
@@ -281,4 +346,32 @@ class FicheFraisController extends AbstractController
 
         return $this->redirectToRoute('fiche_frais');
     }
+
+    /**
+     * @Route("/fiche/frais/comptable/save", name="update_fiche_frais_comptable_save", methods={"GET","POST"}) 
+     */
+    public function ficheFraisComptableSave(EntityManagerInterface $manager, Request $request): Response
+    {
+        //dd($request);
+        $ficheFrais = $manager->getRepository(FicheFrais::class)->find($request->request->get("idFicheFrais"));
+        $ficheFrais->setEtatFicheFrais($manager->getRepository(EtatFiche::class)->find($request->request->get("etat")));
+        $manager->flush();
+
+        $arrayStatut = $request->request->get("statut");
+        foreach ($arrayStatut as $idFraisForfait => $statutLigne) {
+            $ligneFraisForfait = $manager->getRepository(LigneFraisForfait::class)->find($idFraisForfait);
+            $ligneFraisForfait->setStatutLigneFraisForfait($manager->getRepository(StatutLigne::class)->find($statutLigne));
+            $manager->flush();
+        }
+
+        $arrayStatutFhf = $request->request->get("statutFhf");
+        foreach ($arrayStatutFhf as $idFraisHorsForfait => $statutLigneFhf) {
+            $ligneFhf = $manager->getRepository(LigneFraisHorsForfait::class)->find($idFraisHorsForfait);
+            $ligneFhf->setStatutLigneFraisHorsForfait($manager->getRepository(StatutLigne::class)->find($statutLigneFhf));
+            $manager->flush();
+        }
+
+        return $this->redirectToRoute('fiche_frais');
+    }
+
 }
