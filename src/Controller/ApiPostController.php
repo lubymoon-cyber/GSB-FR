@@ -3,23 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\FicheFrais;
+use App\Entity\EtatFiche;
+use App\Entity\StatutLigne;
+use App\Entity\LigneFraisForfait;
+use App\Entity\LigneFraisHorsForfait;
 use App\Repository\FicheFraisRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
- use App\Entity\User;
- use App\Repository\PostRepository;
- use App\Repository\UserRepository;
- use Symfony\Component\HttpFoundation\Response;
- use Symfony\Component\Routing\Annotation\Route;
- use Symfony\Component\HttpFoundation\JsonResponse;
- use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use JMS\Serializer\SerializationContext;
+use App\Entity\User;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiPostController extends AbstractController
 
 {
     /**
-     * @Route("/api/user/list/{id}", name="api_user_list")
+     * @Route("/api/user/list/{id}", name="api_user_list", methods={"POST","GET"})
      */
     public function index(UserRepository $userRepository, User $user): Response
     {
@@ -40,7 +44,7 @@ class ApiPostController extends AbstractController
     }
   
       /**
-     * @Route("/api/fiche/frais/list/{id}", name="api_fiche_frais_list")
+     * @Route("/api/fiche/frais/list/{id}", name="api_fiche_frais_list", methods={"POST","GET"})
      */
     public function apiListFicheFrais(FicheFraisRepository $ficheFraisRepository,User $user)
     {
@@ -54,11 +58,11 @@ class ApiPostController extends AbstractController
         $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
         $serializer->serialize($data, 'json');
 
-        return JsonResponse::fromJsonString($serializer->serialize($data, 'json'));
+        return JsonResponse::fromJsonString($serializer->serialize($data, 'json', SerializationContext::create()->enableMaxDepthChecks()));
     }
   
       /**
-     * @Route("/api/fiche/frais/detail/{id}", name="api_fiche_frais_detail")
+     * @Route("/api/fiche/frais/detail/{id}", name="api_fiche_frais_detail", methods={"POST","GET"})
      */
     public function apiDetailFicheFrais(FicheFrais $ficheFrais)
     {
@@ -116,63 +120,48 @@ class ApiPostController extends AbstractController
     /**
      * créer une fiche de frais et ensuite une lignefraisforfait et lignefraishorsforfait
      *
-     * @Route("/api/fichefrais/new/", name="api_new_fichefrais",methods={"PUT","POST"})
+     * @Route("/api/fiche/frais/new/{id}", name="api_new_fichefrais",methods={"PUT","POST"})
      * @return JSON
      */
-
-    //création fichefrais
-    public function apiNewfichefrais(Request $request,FicheFrais $fichefrais)
+    public function apiNewfichefrais(Request $request, User $user)
     {
-        dd($request);
-        $entityManager = $this->getDoctrine()->getManager();
-        $fichefrais = new fichefrais();
-        $dateNow = new DateTime('NOW');
+        //dd($request);
+        $data = json_decode(utf8_encode($request->getContent()));
+        
+        $manager = $this->getDoctrine()->getManager();
+        $fichefrais = new FicheFrais();
+        $dateNow = new \DateTime('NOW');
         $fichefrais->setDateFicheFrais($dateNow);
-        $user = $this->getUser();
-        $request->request($dateEemission);
 
-        $ficheFrais->setDateFicheFrais($dateEemission);
-        $ficheFrais->setDateModificationFicheFrais($dateNow);
-        $ficheFrais->setEtatFicheFrais($manager->getRepository(EtatFiche::class)->findOneByLibelle("Fiche créée, saisie en cours"));
-        $ficheFrais->setUtilisateurFicheFrais($user);
+        $fichefrais->setDateFicheFrais($dateNow);
+        $fichefrais->setDateCreationFicheFrais($dateNow);
+        $fichefrais->setDateModificationFicheFrais($dateNow);
+        $fichefrais->setEtatFicheFrais($manager->getRepository(EtatFiche::class)->findOneByLibelle("Fiche créée, saisie en cours"));
+        $fichefrais->setUtilisateurFicheFrais($user);
+        $fichefrais->setNbJustificatif(0);
         //$manager->persist($ficheFrais);
         //$manager->flush();
-        $entityManager->persist($fichefrais);
-        $entityManager->flush();
-    
-        //création lignefraisforfait
-        $quantites = $request->request->get('quantite');
-        $fichiers = $request->files->get('files');
-        foreach ($quantites as $idFraisForfait=>$qte){
-            $ligneff = new LigneFraisForfait();
-            $ligneff->setDateCreationLigneFraisForfait($dateNow);
-            $ligneff->setQuantite($qte);
-            $ligneff->setDateLigneFraisForfait($dateNow);
-            $ligneff->setUtilisateurLigneFraisForfait($user);
-            $ligneff->setFraisForfait($manager->getRepository(FraisForfait::class)->find($idFraisForfait));
-            $ligneff->setStatutLigneFraisForfait($manager->getRepository(StatutLigne::class)->findOneByLibelle("Saisie"));
-            $ligneff->setFicheFrais($ficheFrais);
-            $manager->persist($ligneff);
-            $manager->flush();
-        }
-    
-        //création lignefraishorsforfait
-        $libelleFhf = $request->request->get('libelleFhf');
-        $dateFhf = $request->request->get('dateFhf');
-        $montantFhf = $request->request->get('montantFhf');
-        foreach ($montantFhf as $key=>$valeur){
-            $lignefhf = new LigneFraisHorsForfait();
-            $lignefhf->setDateCreationLigneFraisHorsForfait($dateNow);
-            $lignefhf->setMontant($valeur);
-            $lignefhf->setDateLigneFraisHorsForfait(DateTime::createFromFormat('Y-m-d', $dateFhf[$key]));
-            $lignefhf->setUtilisateurLigneFraisHorsForfait($user);
-            $lignefhf->setStatutLigneFraisHorsForfait($manager->getRepository(StatutLigne::class)->findOneByLibelle("Saisie"));
-            $lignefhf->setHorsClassification(false);
-            $lignefhf->setLibelle($libelleFhf[$key]);
-            $lignefhf->setFicheFrais($ficheFrais);
-            $manager->persist($lignefhf);
-            $manager->flush();
-        }
-        return JsonResponse::fromJsonString($serializer->serialize($fichefrais, 'json'));
+        $manager->persist($fichefrais);
+        $manager->flush();
+
+        $lignefhf = new LigneFraisHorsForfait();
+        $lignefhf->setDateCreationLigneFraisHorsForfait($dateNow);
+
+        $lignefhf->setMontant($data->montant_hors_forfait);
+
+        $lignefhf->setDateLigneFraisHorsForfait($dateNow);
+        $lignefhf->setUtilisateurLigneFraisHorsForfait($user);
+        $lignefhf->setStatutLigneFraisHorsForfait($manager->getRepository(StatutLigne::class)->findOneByLibelle("Saisie"));
+        $lignefhf->setHorsClassification(false);
+
+        $lignefhf->setLibelle($data->libelle_hors_forfait);
+
+        $lignefhf->setFicheFrais($fichefrais);
+        $manager->persist($lignefhf);
+        $manager->flush();
+
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+        
+        return JsonResponse::fromJsonString($serializer->serialize([], 'json', SerializationContext::create()->enableMaxDepthChecks()));
     }
 }

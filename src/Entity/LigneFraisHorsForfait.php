@@ -6,6 +6,7 @@ use App\Repository\LigneFraisHorsForfaitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=LigneFraisHorsForfaitRepository::class)
@@ -21,18 +22,21 @@ class LigneFraisHorsForfait
 
     /**
      * @ORM\ManyToMany(targetEntity=Justificatif::class, inversedBy="ligneFraisHorsForfaits")
+     * @MaxDepth(1)
      */
     private $justificatif;
 
     /**
      * @ORM\ManyToOne(targetEntity=StatutLigne::class, inversedBy="ligneFraisHorsForfaits")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(1)
      */
     private $statutLigneFraisHorsForfait;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ligneFraisHorsForfaits")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(1)
      */
     private $utilisateurLigneFraisHorsForfait;
 
@@ -64,6 +68,7 @@ class LigneFraisHorsForfait
     /**
      * @ORM\ManyToOne(targetEntity=FicheFrais::class, inversedBy="ligneFraisHorsForfaits")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(1)
      */
     private $ficheFrais;
 
